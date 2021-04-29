@@ -35,17 +35,30 @@ var server = http.createServer((req, res) => {
 
   req.on('end', () => {
     buffer += decoder.end()
+
+    // choose the handler that this request goes to
+    // If one is not found use the notFound handler
+    var chosenHandler = typeof(router[trimmedPath]) !== 'undefined' ? router[trimmedPath] : handlers.notFound
+
+    // Construct the data object to send to the handler
+    var data = {
+      'trimmedPath': trimmedPath,
+      'queryStringObject': queryStringObject,
+      'method': method,
+      'headers': headers,
+      'payload': buffer
+    }
+
+    // Route the request to the handler specified in the router
+    chosenHandler(data, (statusCode, payload) => {
+      
+    })
+
     // Send the response
     res.end('Hello Nodejs\n')
     // Log the request path
     console.log('Request received with this payload: ', buffer)
   })
-
-
-  
-  // Log the request path
-  // console.log('Request received on path: ' + trimmedPath + ' with method: ' + method + ' and with these perameters ', queryStringObject)
-  // console.log('Request received with these headers', headers)
 
 })
 
@@ -53,3 +66,22 @@ var server = http.createServer((req, res) => {
 server.listen(3000, () => {
   console.log("The server is listening on port 3000")
 })
+
+// Define the handlers
+var handlers = {}
+
+// Sample handler
+handlers.sample = (data, callback) => {
+  // Callback a http status code, and a payload object
+  callback(406, {'name': 'sample handler'})
+}
+
+// Not found handlers
+handlers.notFound = (data, callback) => {
+  callback(404)
+}
+
+// Define a request router
+var router = {
+  'sample': handlers.sample
+}
