@@ -51,13 +51,28 @@ var server = http.createServer((req, res) => {
 
     // Route the request to the handler specified in the router
     chosenHandler(data, (statusCode, payload) => {
-      
+      // Use the status code called back by the handler, or default
+      statusCode = typeof(statusCode) === 'number' ? statusCode : 200
+
+      // Use the payload called back by the handler, or default to an empty object
+      payload = typeof(payload) === 'object' ? payload : {}
+
+      // Convert the payload to a string 
+      var payloadString = JSON.stringify(payload)
+
+      // Return the response
+      res.setHeader('Content-Type', 'application/json')
+      res.writeHead(statusCode)
+      res.end(payloadString)
+
+      // Log the request path 
+      console.log('Returning this response: ', statusCode, payloadString) 
     })
 
-    // Send the response
-    res.end('Hello Nodejs\n')
-    // Log the request path
-    console.log('Request received with this payload: ', buffer)
+    // // Send the response
+    // res.end('Hello Nodejs\n')
+    // // Log the request path
+    // console.log('Request received with this payload: ', buffer)
   })
 
 })
