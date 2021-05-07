@@ -24,6 +24,11 @@ red: blue
   This is the body that we are sending
 </request>
 
+###
+GET http://localhost:3000/ping HTTP/1.1
+
+
+
 
 
 
