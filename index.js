@@ -11,9 +11,11 @@ var _data = require('./lib/data')
 
 // Testing
 // @TODO delete this
-_data.create('test', 'newFile', {'foo': 'bar'}, (err) => {
-  console.log('this was the error: ', err)
+_data.update('test', 'newFile', {'fizz':'buzz'}, (err, data) => {
+  console.log('this was the error: ', err, '\n and this was the data ', data)
 })
+
+23.43
 
 // The server should respond to all request with a string
 
