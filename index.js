@@ -5,17 +5,11 @@ var http = require('http')
 var https = require('https')
 var url = require('url')
 var StringDecoder = require('string_decoder').StringDecoder
-var config = require('./config')
+var config = require('./lib/config')
 var fs = require('fs')
-var _data = require('./lib/data')
-
-// Testing
-// @TODO delete this
-_data.update('test', 'newFile', {'fizz':'buzz'}, (err, data) => {
-  console.log('this was the error: ', err, '\n and this was the data ', data)
-})
-
-23.43
+const handlers = require('./lib/handlers')
+const helpers = require('./lib/helpers')
+// var _data = require('./lib/data')
 
 // The server should respond to all request with a string
 
@@ -84,9 +78,11 @@ var unifiedServer = (req, res) => {
       'queryStringObject': queryStringObject,
       'method': method,
       'headers': headers,
-      'payload': buffer
+      'payload': helpers.parseJsonToObject(buffer)
     }
 
+    32:19
+    
     // Route the request to the handler specified in the router
     chosenHandler(data, (statusCode, payload) => {
       // Use the status code called back by the handler, or default
@@ -105,25 +101,15 @@ var unifiedServer = (req, res) => {
 
       // Log the request path 
       console.log('Returning this response: ', statusCode, payloadString) 
+
+
     })
 
   })
 }
 
-// Define the handlers
-var handlers = {}
-
-// Ping handlers
-handlers.ping = (data, callback) => {
-  callback(200)
-}
-
-// Not found handlers
-handlers.notFound = (data, callback) => {
-  callback(404)
-}
-
 // Define a request router
 var router = {
-  'ping': handlers.ping 
+  'ping': handlers.ping,
+  'users': handlers.users
 }
