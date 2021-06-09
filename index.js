@@ -81,10 +81,10 @@ var unifiedServer = (req, res) => {
       'payload': helpers.parseJsonToObject(buffer)
     }
 
-    32:19
+    // 32:19
     
     // Route the request to the handler specified in the router
-    chosenHandler(data, (statusCode, payload) => {
+    chosenHandler = (data, (statusCode, payload) => {
       // Use the status code called back by the handler, or default
       statusCode = typeof(statusCode) === 'number' ? statusCode : 200
 
@@ -102,10 +102,12 @@ var unifiedServer = (req, res) => {
       // Log the request path 
       console.log('Returning this response: ', statusCode, payloadString) 
 
-
     })
 
+    chosenHandler()
+
   })
+
 }
 
 // Define a request router
