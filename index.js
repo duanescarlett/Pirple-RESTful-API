@@ -41,8 +41,8 @@ httpsServer.listen(config.httpsPort, () => {
 // All the server logic for both the http and https server
 var unifiedServer = (req, res) => {
   // Get the url and parse it
-  var parsedUrl = url.parse(req.url, true)
-  
+  // var parsedUrl = url.parse(req.url, true)
+  var parsedUrl = new URL(`https://localhost:3001${req.url}`)
   // Get the path
   var path = parsedUrl.pathname
   var trimmedPath = path.replace(/^\/+|\/+$/g, '')
@@ -65,6 +65,8 @@ var unifiedServer = (req, res) => {
     buffer += decoder.write(data)
   })
 
+  14:55
+  
   req.on('end', () => {
     buffer += decoder.end()
 
@@ -113,5 +115,6 @@ var unifiedServer = (req, res) => {
 // Define a request router
 var router = {
   'ping': handlers.ping,
-  'users': handlers.users
+  'users': handlers.users,
+  'tokens': handlers.tokens,
 }
