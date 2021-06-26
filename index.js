@@ -64,8 +64,6 @@ var unifiedServer = (req, res) => {
   req.on('data', (data) => {
     buffer += decoder.write(data)
   })
-
-  14:55
   
   req.on('end', () => {
     buffer += decoder.end()
@@ -100,6 +98,9 @@ var unifiedServer = (req, res) => {
       res.setHeader('Content-Type', 'application/json')
       res.writeHead(statusCode)
       res.end(payloadString)
+
+      console.log('Arrived')
+      // Problem Area
 
       // Log the request path 
       console.log('Returning this response: ', statusCode, payloadString) 
