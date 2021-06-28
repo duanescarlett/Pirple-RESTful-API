@@ -52,6 +52,7 @@ var unifiedServer = (req, res) => {
 
   // Get the HTTP Method
   var method = req.method.toLowerCase()
+  console.log(method)
 
   // Get the headers as an object
   var headers = req.headers
