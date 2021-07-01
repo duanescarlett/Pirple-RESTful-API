@@ -9,7 +9,6 @@ var config = require('./lib/config')
 var fs = require('fs')
 const handlers = require('./lib/handlers')
 const helpers = require('./lib/helpers')
-// var _data = require('./lib/data')
 
 // The server should respond to all request with a string
 
@@ -30,6 +29,7 @@ var httpsServerOptions = {
 }
 
 var httpsServer = https.createServer(httpsServerOptions, (req, res) => {
+  // console.log(req)
   unifiedServer(req, res)
 })
 
@@ -52,7 +52,7 @@ var unifiedServer = (req, res) => {
 
   // Get the HTTP Method
   var method = req.method.toLowerCase()
-  console.log(method)
+  // console.log(method)
 
   // Get the headers as an object
   var headers = req.headers
@@ -90,7 +90,7 @@ var unifiedServer = (req, res) => {
       statusCode = typeof(statusCode) === 'number' ? statusCode : 200
 
       // Use the payload called back by the handler, or default to an empty object
-      payload = typeof(payload) === 'object' ? payload : {}
+      payload = typeof(payload) === 'object' ? payload : {data}
 
       // Convert the payload to a string 
       var payloadString = JSON.stringify(payload)
@@ -100,15 +100,15 @@ var unifiedServer = (req, res) => {
       res.writeHead(statusCode)
       res.end(payloadString)
 
-      console.log('Arrived')
+      // console.log('Arrived')
       // Problem Area
 
       // Log the request path 
       console.log('Returning this response: ', statusCode, payloadString) 
-
+      // handlers.users()
     })
-
-    chosenHandler()
+    // console.log(req)
+    chosenHandler(data)
 
   })
 
@@ -118,5 +118,5 @@ var unifiedServer = (req, res) => {
 var router = {
   'ping': handlers.ping,
   'users': handlers.users,
-  'tokens': handlers.tokens,
+  'tokens': handlers.tokens
 }
