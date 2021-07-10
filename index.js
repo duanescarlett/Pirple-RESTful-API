@@ -100,12 +100,15 @@ var unifiedServer = (req, res) => {
       res.writeHead(statusCode)
       res.end(payloadString)
 
-      // console.log('Arrived')
-      // Problem Area
+      // handlers.users(data, (err, statusCode) => {
+      //   if (err) {
+      //     console.log(err)
+      //   }
+      // })
 
       // Log the request path 
       console.log('Returning this response: ', statusCode, payloadString) 
-      // handlers.users()
+      
     })
     // console.log(req)
     chosenHandler(data)
