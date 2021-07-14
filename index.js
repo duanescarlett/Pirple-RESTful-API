@@ -3,7 +3,7 @@
 // Dependencies
 var http = require('http')
 var https = require('https')
-var url = require('url')
+// var url = require('url')
 var StringDecoder = require('string_decoder').StringDecoder
 var config = require('./lib/config')
 var fs = require('fs')
@@ -45,14 +45,18 @@ var unifiedServer = (req, res) => {
   var parsedUrl = new URL(`https://localhost:3001${req.url}`)
   // Get the path
   var path = parsedUrl.pathname
+  console.log("Path: ", path)
+
   var trimmedPath = path.replace(/^\/+|\/+$/g, '')
+  console.log('Trimmed Path: ', trimmedPath)
 
   // Get the query string as an object
   var queryStringObject = parsedUrl.query
+  console.log('Query String: ', queryStringObject)
 
   // Get the HTTP Method
   var method = req.method.toLowerCase()
-  // console.log(method)
+  console.log('Method: ', method)
 
   // Get the headers as an object
   var headers = req.headers
@@ -81,8 +85,6 @@ var unifiedServer = (req, res) => {
       'headers': headers,
       'payload': helpers.parseJsonToObject(buffer)
     }
-
-    // 32:19
     
     // Route the request to the handler specified in the router
     chosenHandler = (data, (statusCode, payload) => {
