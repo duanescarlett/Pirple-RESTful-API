@@ -9,7 +9,7 @@ var config = require('./lib/config')
 var fs = require('fs')
 const handlers = require('./lib/handlers')
 const helpers = require('./lib/helpers')
-const _data = require('./lib/data')
+// const _data = require('./lib/data')
 // The server should respond to all request with a string
 
 // _data.delete('test', 'branNewFile', (err) => {
@@ -29,6 +29,7 @@ const _data = require('./lib/data')
 //   console.log('this was the error', err)
 // })
 // Instanciate the HTTP server
+
 var httpServer = http.createServer((req, res) => {
   unifiedServer(req, res)
 })
